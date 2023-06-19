@@ -1,3 +1,3 @@
 # Example-Data-Races-In-Image-Loading
 
-A description of this package.
+[![CI](https://github.com/rozeridilar/Example-App-Data-Races-iOS/actions/workflows/swift.yml/badge.svg?branch=main)](https://github.com/rozeridilar/Example-App-Data-Races-iOS/actions/workflows/swift.yml)
