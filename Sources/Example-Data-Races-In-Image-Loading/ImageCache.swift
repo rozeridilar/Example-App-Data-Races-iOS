@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  ImageCache.swift
 //  Example-Data-Races-In-Image-Loading
 //
 //  Created by Rozeri Dilar on 19.06.2023.
