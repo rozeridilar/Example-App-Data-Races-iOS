@@ -1,0 +1,32 @@
+name: Code Metrics
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Swift
+        uses: actions/setup-swift@v2
+
+      - name: Install SwiftLint
+        run: swift package resolve
+
+      - name: Run SwiftLint and Extract Metrics
+        run: |
+          swiftlint --strict --quiet --reporter json > swiftlint_report.json
+          # Write custom script here to extract desired metrics from the swiftlint_report.json file
+
+      - name: Display Metrics Summary
+        run: |
+          # Write custom script here to display or process the extracted metrics
