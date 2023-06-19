@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "752B91F0-0C15-4507-AB31-E4EC2CF862B6",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "Example-Data-Races-In-Image-LoadingTests",
+        "name" : "Example-Data-Races-In-Image-LoadingTests"
+      }
+    }
+  ],
+  "version" : 1
+}
