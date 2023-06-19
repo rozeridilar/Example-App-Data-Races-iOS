@@ -152,6 +152,8 @@ final class ImageCacheTests: XCTestCase {
 
         let imageCache = ImageCache(session: urlSession)
 
+        trackForMemoryLeaks(imageCache, file: file, line: line)
+        trackForMemoryLeaks(urlSession, file: file, line: line)
 
         return imageCache
     }
