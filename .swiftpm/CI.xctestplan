@@ -9,7 +9,15 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : false
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "Example-Data-Races-In-Image-Loading",
+          "name" : "Example-Data-Races-In-Image-Loading"
+        }
+      ]
+    },
     "testExecutionOrdering" : "random",
     "threadSanitizerEnabled" : true
   },
