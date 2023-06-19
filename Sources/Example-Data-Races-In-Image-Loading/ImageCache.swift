@@ -13,8 +13,12 @@ public class ImageCache {
     private var loadingResponses = [NSURL: [(ImageItem, UIImage?) -> Swift.Void]]()
     private var runningRequests = [NSURL: URLSessionDataTask]()
 
+    private let syncQueue = DispatchQueue(label: "Queue to sync mutation")
+
     public final func image(url: NSURL) -> UIImage? {
-        return cachedImages.object(forKey: url)
+        syncQueue.sync {
+            return cachedImages.object(forKey: url)
+        }
     }
 
     public init(session: URLSession = URLSession.shared,
@@ -39,11 +43,13 @@ public class ImageCache {
             return
         }
 
-        if self.loadingResponses[url] != nil {
-            self.loadingResponses[url]?.append(completion)
-            return
-        } else {
-            self.loadingResponses[url] = [completion]
+        syncQueue.sync {
+            if self.loadingResponses[url] != nil {
+                self.loadingResponses[url]?.append(completion)
+                return
+            } else {
+                self.loadingResponses[url] = [completion]
+            }
         }
 
         let task = urlSession.dataTask(with: url as URL) { [weak self] data, _, error in
@@ -62,7 +68,9 @@ public class ImageCache {
                 return
             }
 
-            self.cachedImages.setObject(image, forKey: url, cost: responseData.count)
+            self.syncQueue.sync {
+                self.cachedImages.setObject(image, forKey: url, cost: responseData.count)
+            }
 
             for block in blocks {
                 queue.async { [weak self] in
@@ -76,11 +84,15 @@ public class ImageCache {
 
         task.resume()
 
-        self.runningRequests[url] = task
+        syncQueue.sync {
+            self.runningRequests[url] = task
+        }
     }
 
     public func cancelLoad(_ url: NSURL) {
-        self.runningRequests[url]?.cancel()
-        self.runningRequests.removeValue(forKey: url)
+        syncQueue.sync {
+            self.runningRequests[url]?.cancel()
+            self.runningRequests.removeValue(forKey: url)
+        }
     }
 }
