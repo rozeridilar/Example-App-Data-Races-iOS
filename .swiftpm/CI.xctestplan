@@ -11,6 +11,7 @@
   "defaultOptions" : {
     "codeCoverage" : false
     "testExecutionOrdering" : "random",
+    "threadSanitizerEnabled" : true
   },
   "testTargets" : [
     {
